@@ -6,26 +6,35 @@ protected_erea();
 
 $rows = db_select('categories', 'parent_id != 0');
 
-$categories[0] = "No Parent";
+$categories= [] ;
 foreach ($rows as $val) {
   $categories[$val['id']] = $val['name'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $_SESSION['form']['value'] = $_POST;
+ 
+  
+  
   $imgs = upload_images($_FILES);
   $data['name'] = $_POST['name'];
+  $data['buying_price'] = $_POST['buying_price'];
+  $data['price'] = $_POST['price'];
+  // $data['category_id'] = $_POST['category_id'];
   $data['description'] = $_POST['description'];
   $data['photo'] = json_encode($imgs);
-  $data['parent_id'] = 0;
-
-  if (db_insert('categories', $data)) {
-    alert('success', 'Tạo dữ liệu mưới thành công.');
-    header('Location: admin-categories.php');
+  // echo"<pre>";
+  // print_r($data['photo']);
+  // die();
+  $data['user_id'] = $_SESSION['user']['id'];
+  
+  if (db_insert('products', $data)) {
+    alert('success', 'Tạo sản phẩm mới thành công.');
+    header('Location: admin-products.php');
     unset($_SESSION['form']);
   } else {
-    alert('danger', 'Lỗi khi tạo dữ liệu mới. Làm ơn thử lại.');
-    header('Location: admin-categories-add.php');
+    alert('danger', 'Lỗi khi tạo sản phẩm mới. Làm ơn thử lại.');
+    header('Location: admin-products-add.php');
   }
 
   die();
@@ -67,7 +76,7 @@ require_once('files/header.php');
             ], $categories) ?> -->
           </div>
         </div>
-        <form action="admin-categories-add.php" method="POST" enctype="multipart/form-data">
+        <form action="admin-products-add.php" method="POST" enctype="multipart/form-data">
           <div class="mb-3 pb-2">
 
             <div class="row ">
@@ -77,6 +86,14 @@ require_once('files/header.php');
                 ]) ?>
               </div>
             </div>
+            <!-- <div class="row ">
+              <div class="col-md-12">
+                <?= select_input([
+                  'name' => 'category_id',
+                  'label' => 'Category',
+                ], $categories) ?>
+              </div>
+            </div> -->
             <div class="row">
               <div class="col-md-6 mt-2">
                 <?= text_input([
@@ -92,21 +109,34 @@ require_once('files/header.php');
               </div>
             </div>
 
-              <div class="row mt-4">
-                <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6 mt-3">
                   <div class="form-group">
                     <label for="photo">Product photo 1</label>
                     <input class="form-control" name="photo_1" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mt-3">
                   <div class="form-group">
                     <label for="photo">Product photo 2</label>
-                    <input class="form-control" name="photo_21" type="file" accept=".jpg,.jpeg,.png">
+                    <input class="form-control" name="photo_2" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
               </div>
-            
+              <div class="row">
+                <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="photo">Product photo 3</label>
+                    <input class="form-control" name="photo_3" type="file" accept=".jpg,.jpeg,.png">
+                  </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="photo">Product photo 4</label>
+                    <input class="form-control" name="photo_4" type="file" accept=".jpg,.jpeg,.png">
+                  </div>
+                </div>
+              </div>
 
           </div>
           <div class="row mt-3">

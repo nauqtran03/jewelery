@@ -7,16 +7,79 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 $conn = new mysqli('localhost', 'root', '', 'jewelry');
 
+function get_product($id)
+{
+    global $conn;
+    $sql = "SELECT * FROM products WHERE id = $id";
+    $result = $conn->query($sql);
+    
+    if (!$result || $result->num_rows == 0) {
+        return null;
+    }
 
-function db_select($table,$condition = null){
+    $data['pro'] = $result->fetch_assoc();
+    $data['cat'] = null;
+
+    if ($data['pro'] != null) {
+        $cat_id = $data['pro']['category_id'];
+        $sql = "SELECT * FROM categories WHERE id = $cat_id";
+        $result = $conn->query($sql);
+        if ($result && $result->num_rows > 0) {
+            $data['cat'] = $result->fetch_assoc();
+        }
+    }
+    return $data;
+}
+function get_product_photo($json)
+{
+    $img['src'] = "assets/no_image.jpg";
+    $img['thumb'] = "assets/no_image.jpg";
+    $photo[] = $img; 
+    if ($json == null) {
+        return $photo;
+    }
+    if (strlen($json) < 4) {
+        return $photo;
+    }
+    $objects = json_decode($json);
+    if (empty($objects)) {
+        return $photo;
+    }
+    if (!isset($objects[0]->thumb)) {
+        return $photo;
+    }
+    return $objects;
+}
+function get_product_thumb($json)
+{
+    $img = "assets/no_image.jpg";
+    if ($json == null) {
+        return $img;
+    }
+    if (strlen($img) < 4) {
+        return $img;
+    }
+    $objects = json_decode($json);
+    if (empty($objects)) {
+        return $img;
+    }
+    if (!isset($objects[0]->thumb)) {
+        return $img;
+    }
+    return $objects[0]->thumb;
+}
+
+function db_select($table, $condition = null)
+{
     $sql = "SELECT * FROM $table";
-    if($condition != null){
+
+    if ($condition != null) {
         $sql .= " WHERE $condition ";
     }
     global $conn;
     $res = $conn->query($sql);
-    $rows=[];
-    while ($row = $res->fetch_assoc()){
+    $rows = [];
+    while ($row = $res->fetch_assoc()) {
         $rows[] = $row;
     }
     return $rows;
@@ -26,7 +89,7 @@ function db_insert($table_name, $data)
 {
 
     $sql = "INSERT INTO $table_name ";
-
+    global $conn;
     $column_names = "(";
     $column_values = "(";
     $is_first = true;
@@ -40,8 +103,10 @@ function db_insert($table_name, $data)
         $column_names .= $key;
         $gettype = gettype($value);
         if ($gettype == 'string') {
+            $value = $conn->real_escape_string($value);
             $column_values .= "'$value'";
         } else {
+            $value = $conn->real_escape_string($value);
             $column_values .= $value;
         }
     }
@@ -50,7 +115,7 @@ function db_insert($table_name, $data)
     $sql .= $column_names . " VALUES " . $column_values;
 
 
-    global $conn;
+    
     if ($conn->query($sql)) {
         return true;
     } else {
@@ -63,7 +128,8 @@ function db_insert($table_name, $data)
 
 function create_thumb($source, $target)
 {
-
+    // ini_set('memory_limit','-1');
+    // ini_set('max_execution_time', '-1');
     $image = new Zebra_Image();
 
     $image->auto_handle_exif_orientation = true;
@@ -122,7 +188,7 @@ function upload_images($files)
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $file_name = time() . "-" . rand(100000, 1000000) . "." . $ext;
             $destination = 'uploads/' . $file_name;
-            $thumb_destination = 'uploads\thumb_' . $file_name;
+            $thumb_destination = 'uploads/thumb_' . $file_name;
 
             $res = move_uploaded_file($file['tmp_name'], $destination);
             if (!$res) {
@@ -203,33 +269,34 @@ function login_user($email, $password)
 function text_input($data)
 {
     $name = (isset($data['name'])) ? $data['name'] : "";
-    $atrributes = (isset($data['attributes'])) ? $data['atrributes'] : "";
+    $attributes = (isset($data['attributes'])) ? $data['attributes'] : "";
+    
     $value = "";
     $error = "";
     $error_text = "";
     if (isset($_SESSION['form'])) {
-        if (isset($_SESSION['form']['name'])) {
+        if (isset($_SESSION['form']['value'])) {
             if (isset($_SESSION['form']['value'][$name])) {
                 $value = $_SESSION['form']['value'][$name];
             }
         }
     }
     if (isset($_SESSION['form'])) {
-        if (isset($_SESSION['form']['name'])) {
+        if (isset($_SESSION['form']['error'])) {
             if (isset($_SESSION['form']['error'][$name])) {
                 $error = $_SESSION['form']['error'][$name];
                 $error_text = '<div class="form-text text danger">' . $error . '</div>';
             }
         }
     }
-    $name = (isset($data['name'])) ? $data['name'] : "";
+  
     $label = (isset($data['label'])) ? $data['label'] : $name;
     $value = (isset($data['value'])) ? $data['value'] : $value;
     $error = (isset($data['error'])) ? $data['error'] : $error;
 
     return
         '<label class="form-label text-capitalize" for="' . $name . '">' . $label . '</label>
-    <input name ="' . $name . '" value="' . $value . '" class="form-control" type="text" placeholder ="' . $label . '" ' . $atrributes . '>'
+    <input name ="' . $name . '" value="' . $value . '" class="form-control" type="text" id="'.$name.'" placeholder ="' . $label . '" ' . $attributes . '>'
         . $error_text;
 }
 function select_input($data, $options)
@@ -256,14 +323,14 @@ function select_input($data, $options)
 
     // Xây dựng các tùy chọn của thẻ <select>
     $select_options = "";
-    $selected ="";
+    $selected = "";
     foreach ($options as $key => $val) {
         $selected = ($key == $value) ? "selected" : "";
         $select_options .= '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
     }
 
     // Tạo thẻ <select> và chèn các thuộc tính khác nếu có
-    $select_tag = '<select name="' . $name . ' '.$selected.' " class="form-control" id="' . $name . '" placeholder="' . $label . '" ' . $attributes . '>
+    $select_tag = '<select name="' . $name . ' ' . $selected . ' " class="form-control" id="' . $name . '" placeholder="' . $label . '" ' . $attributes . '>
         ' . $select_options . '
     </select>';
 
@@ -272,4 +339,119 @@ function select_input($data, $options)
         '<label class="form-label text-capitalize" for="' . $name . '">' . $label . '</label>'
         . $select_tag
         . $error_text;
+}
+function product_item_ui_1($pro)
+{
+
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+
+              <div class="card product-card product-list">
+              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
+              <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
+                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                  <h3 class="product-title fs-base"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
+                  <div class="d-flex justify-content-between">
+                    <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                    </div>
+                  </div>
+                  <div class="card-body card-body-hidden">
+                    <div class="pb-2">
+                    </div>
+                    <button class="btn btn-primary btn-sm mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top pt-3 mt-3"></div>
+
+    EOF;
+    return $str;
+}
+function product_item_ui_2($pro)
+{
+
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+
+              <div class="d-flex align-items-center pb-2 border-bottom"><a class="d-block" href="product.php?id={$pro['id']}"><img src="{$thumb}" width="64" alt="Product"></a>
+                  <div class="ps-2">
+                    <h6 class="widget-product-title"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h6>
+                    <div class="widget-product-meta"><span class="text-accent me-2">{$pro['buying_price']}<small>Đ</small></span></div>
+                  </div>
+                </div>
+
+    EOF;
+    return $str;
+}
+function product_item_ui_3($pro){
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+        <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
+            <div class="card product-card">
+              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
+              <a class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
+              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
+                <div class="d-flex justify-content-between">
+                  <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body card-body-hidden">
+                <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                
+              </div>
+            </div>
+            <hr class="d-sm-none">
+          </div>
+    EOF;
+    return $str;
+}
+function product_item_ui_4($pro){
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+        <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
+                      <div class="card product-card card-static">
+                        <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}">
+                        <img src="{$thumb}" alt="Product"></a>
+                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                          <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
+                          <div class="d-flex justify-content-between">
+                            <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+    EOF;
+    return $str;
+}
+function product_item_ui_5($pro){
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+        <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4 d-none d-lg-block">
+                <div class="card product-card card-static">
+                  <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
+                    title="Add to wishlist"><i class="ci-heart"></i></button><a
+                    class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}"><img
+                      src="{$thumb}" alt="Product"></a>
+                  <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                    <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                      <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
+                          class="star-rating-icon ci-star-filled active"></i><i
+                          class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i
+                          class="star-rating-icon ci-star"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    EOF;
+    return $str;
 }

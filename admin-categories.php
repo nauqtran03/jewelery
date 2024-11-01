@@ -55,7 +55,7 @@ $categories = db_select('categories','1 ORDER BY id DESC');
                   foreach ($categories as $key =>$value) {
                 ?>
                 <!-- Product-->
-                <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="marketplace-single.html" style="width: 12.5rem;"><img class="rounded-3" src="img/marketplace/products/th08.jpg" alt="Product"></a>
+                <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="product.php?id=<?= $pro['id']?>" style="width: 12.5rem;"><img class="rounded-3" src="img/marketplace/products/th08.jpg" alt="Product"></a>
                   <div class="text-center text-sm-start">
                     <h3 class="h6 product-title mb-2"><a href="marketplace-single.html">Flat-line E-Commerce Icons (AI)</a></h3>
                     <div class="d-inline-block text-accent">$18.<small>00</small></div>

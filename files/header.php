@@ -1,6 +1,31 @@
+
 <?php
 require_once('files/functions.php');
+$categories = db_select('categories', '1 ORDER BY id ASC');
+
+
+$cart_count = 0;
+$cart_items = [];
+$cart_total = 0;
+$my_cart_counter = 0;
+if(isset($_SESSION['cart'])){
+    if(is_array($_SESSION['cart'])){
+        $_SESSION['cart'] = array_reverse($_SESSION['cart']);
+        foreach($_SESSION['cart'] as $key => $item){
+            $cart_total += $item['pro']['buying_price']*$item['quantity'];
+            $my_cart_counter ++;
+            if($my_cart_counter > 10){
+                continue;
+            }
+            $cart_items[] = $item;
+        }
+        $cart_count = count($_SESSION['cart']);
+    }
+}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,17 +57,6 @@ require_once('files/functions.php');
     <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="css/theme.min.css">
-    <!-- Google Tag Manager-->
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    '../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WKV3GT5');
-    </script>
 </head>
 <!-- Body-->
 
@@ -133,150 +147,7 @@ require_once('files/functions.php');
     </div>
     <main class="page-wrapper">
         <!-- Quick View Modal-->
-        <div class="modal-quick-view modal fade" id="quick-view" tabindex="-1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title product-title"><a href="shop-single-v1.html" data-bs-toggle="tooltip"
-                                data-bs-placement="right" title="Go to product page">Sports Hooded Sweatshirt<i
-                                    class="ci-arrow-right fs-lg ms-2"></i></a></h4>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <!-- Product gallery-->
-                            <div class="col-lg-7 pe-lg-0">
-                                <div class="product-gallery">
-                                    <div class="product-gallery-preview order-sm-2">
-                                        <div class="product-gallery-preview-item active" id="first"><img
-                                                class="image-zoom" src="img/shop/single/gallery/01.jpg"
-                                                data-zoom="img/shop/single/gallery/01.jpg" alt="Product image">
-                                            <div class="image-zoom-pane"></div>
-                                        </div>
-                                        <div class="product-gallery-preview-item" id="second"><img class="image-zoom"
-                                                src="img/shop/single/gallery/02.jpg"
-                                                data-zoom="img/shop/single/gallery/02.jpg" alt="Product image">
-                                            <div class="image-zoom-pane"></div>
-                                        </div>
-                                        <div class="product-gallery-preview-item" id="third"><img class="image-zoom"
-                                                src="img/shop/single/gallery/03.jpg"
-                                                data-zoom="img/shop/single/gallery/03.jpg" alt="Product image">
-                                            <div class="image-zoom-pane"></div>
-                                        </div>
-                                        <div class="product-gallery-preview-item" id="fourth"><img class="image-zoom"
-                                                src="img/shop/single/gallery/04.jpg"
-                                                data-zoom="img/shop/single/gallery/04.jpg" alt="Product image">
-                                            <div class="image-zoom-pane"></div>
-                                        </div>
-                                    </div>
-                                    <div class="product-gallery-thumblist order-sm-1"><a
-                                            class="product-gallery-thumblist-item active" href="#first"><img
-                                                src="img/shop/single/gallery/th01.jpg" alt="Product thumb"></a><a
-                                            class="product-gallery-thumblist-item" href="#second"><img
-                                                src="img/shop/single/gallery/th02.jpg" alt="Product thumb"></a><a
-                                            class="product-gallery-thumblist-item" href="#third"><img
-                                                src="img/shop/single/gallery/th03.jpg" alt="Product thumb"></a><a
-                                            class="product-gallery-thumblist-item" href="#fourth"><img
-                                                src="img/shop/single/gallery/th04.jpg" alt="Product thumb"></a></div>
-                                </div>
-                            </div>
-                            <!-- Product details-->
-                            <div class="col-lg-5 pt-4 pt-lg-0 image-zoom-pane">
-                                <div class="product-details ms-auto pb-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2"><a
-                                            href="shop-single-v1.html#reviews">
-                                            <div class="star-rating"><i
-                                                    class="star-rating-icon ci-star-filled active"></i><i
-                                                    class="star-rating-icon ci-star-filled active"></i><i
-                                                    class="star-rating-icon ci-star-filled active"></i><i
-                                                    class="star-rating-icon ci-star-filled active"></i><i
-                                                    class="star-rating-icon ci-star"></i>
-                                            </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74
-                                                Reviews</span>
-                                        </a>
-                                        <button class="btn-wishlist" type="button" data-bs-toggle="tooltip"
-                                            title="Add to wishlist"><i class="ci-heart"></i></button>
-                                    </div>
-                                    <div class="mb-3"><span
-                                            class="h3 fw-normal text-accent me-1">$18.<small>99</small></span>
-                                        <del class="text-muted fs-lg me-3">$25.<small>00</small></del><span
-                                            class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
-                                    </div>
-                                    <div class="fs-sm mb-4"><span class="text-heading fw-medium me-1">Color:</span><span
-                                            class="text-muted" id="colorOptionText">Red/Dark blue/White</span></div>
-                                    <div class="position-relative me-n4 mb-3">
-                                        <div class="form-check form-option form-check-inline mb-2">
-                                            <input class="form-check-input" type="radio" name="color" id="color1"
-                                                data-bs-label="colorOptionText" value="Red/Dark blue/White" checked>
-                                            <label class="form-option-label rounded-circle" for="color1"><span
-                                                    class="form-option-color rounded-circle"
-                                                    style="background-image: url(img/shop/single/color-opt-1.png)"></span></label>
-                                        </div>
-                                        <div class="form-check form-option form-check-inline mb-2">
-                                            <input class="form-check-input" type="radio" name="color" id="color2"
-                                                data-bs-label="colorOptionText" value="Beige/White/Black">
-                                            <label class="form-option-label rounded-circle" for="color2"><span
-                                                    class="form-option-color rounded-circle"
-                                                    style="background-image: url(img/shop/single/color-opt-2.png)"></span></label>
-                                        </div>
-                                        <div class="form-check form-option form-check-inline mb-2">
-                                            <input class="form-check-input" type="radio" name="color" id="color3"
-                                                data-bs-label="colorOptionText" value="Dark grey/White/Mustard">
-                                            <label class="form-option-label rounded-circle" for="color3"><span
-                                                    class="form-option-color rounded-circle"
-                                                    style="background-image: url(img/shop/single/color-opt-3.png)"></span></label>
-                                        </div>
-                                        <div class="product-badge product-available mt-n1"><i
-                                                class="ci-security-check"></i>Product available</div>
-                                    </div>
-                                    <form class="mb-grid-gutter">
-                                        <div class="mb-3">
-                                            <label class="fw-medium pb-1" for="product-size">Size:</label>
-                                            <select class="form-select" required id="product-size">
-                                                <option value="">Select size</option>
-                                                <option value="xs">XS</option>
-                                                <option value="s">S</option>
-                                                <option value="m">M</option>
-                                                <option value="l">L</option>
-                                                <option value="xl">XL</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 d-flex align-items-center">
-                                            <select class="form-select me-3" style="width: 5rem;">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                            <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
-                                                    class="ci-cart fs-lg me-2"></i>Add to Cart</button>
-                                        </div>
-                                    </form>
-                                    <h5 class="h6 mb-3 pb-2 border-bottom"><i
-                                            class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product
-                                        info</h5>
-                                    <h6 class="fs-sm mb-2">Style</h6>
-                                    <ul class="fs-sm ps-4">
-                                        <li>Hooded top</li>
-                                    </ul>
-                                    <h6 class="fs-sm mb-2">Composition</h6>
-                                    <ul class="fs-sm ps-4">
-                                        <li>Elastic rib: Cotton 95%, Elastane 5%</li>
-                                        <li>Lining: Cotton 100%</li>
-                                        <li>Cotton 80%, Polyester 20%</li>
-                                    </ul>
-                                    <h6 class="fs-sm mb-2">Art. No.</h6>
-                                    <ul class="fs-sm ps-4 mb-0">
-                                        <li>183260098</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Navbar 3 Level (Light)-->
         <header class="shadow-sm">
             <!-- Topbar-->
@@ -337,7 +208,7 @@ require_once('files/functions.php');
                                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                                 <div class="navbar-tool-text ms-n3">
                                     <?php if(is_logged_in()) { ?>
-                                    <small>Hello, <?= $_SESSION['user']['ten_tai_khoan']  ?></small>
+                                    <small>Hello, <?= $_SESSION['user']['ten_tai_khoan'] ?></small>
                                     <?php } else { ?>
                                         <small>Hello, Sign in</small>
                                     <?php } ?>
@@ -345,89 +216,41 @@ require_once('files/functions.php');
                             </a>
                             <div class="navbar-tool dropdown ms-3"><a
                                     class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                                    href="shop-cart.html"><span class="navbar-tool-label">4</span><i
+                                    href="cart.php"><span class="navbar-tool-label"><?= $cart_count ?></span><i
                                         class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text"
-                                    href="shop-cart.html"><small>My Cart</small>$265.00</a>
+                                    href="cart.php"><small>My Cart</small><?= $cart_total ?>đ</a>
                                 <!-- Cart dropdown-->
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
                                         <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-                                            <div class="widget-cart-item pb-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button"
-                                                    aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                            
+                                            <?php foreach($cart_items as $key => $item)  {?>
+                                                <div class="widget-cart-item pb-2 border-bottom">
+                                                <a href="cart-process-remove.php?id=<?= $item['pro']['id'] ?>" class="btn-close text-danger" type="button"
+                                                    aria-label="Remove"><span aria-hidden="true">&times;</span></a>
                                                 <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                                                        href="shop-single-v1.html"><img
-                                                            src="img/shop/cart/widget/01.jpg" width="64"
+                                                        href="product.php?id=<?= $item['pro']['id']?>"><img
+                                                            src="<?= get_product_thumb($item['pro']['photo']) ?>" width="64"
                                                             alt="Product"></a>
                                                     <div class="ps-2">
                                                         <h6 class="widget-product-title"><a
-                                                                href="shop-single-v1.html">Women Colorblock Sneakers</a>
+                                                                href="product.php?id=<?= $item['pro']['id']?>"><?= substr($item['pro']['name'],0,30) ?>...</a>
                                                         </h6>
                                                         <div class="widget-product-meta"><span
-                                                                class="text-accent me-2">$150.<small>00</small></span><span
-                                                                class="text-muted">x 1</span></div>
+                                                                class="text-accent me-2"><?= $item['pro']['buying_price'] ?><small>Đ</small></span><span
+                                                                class="text-muted">x <?= $item['quantity'] ?></span></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button"
-                                                    aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                                                        href="shop-single-v1.html"><img
-                                                            src="img/shop/cart/widget/02.jpg" width="64"
-                                                            alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a
-                                                                href="shop-single-v1.html">TH Jeans City Backpack</a>
-                                                        </h6>
-                                                        <div class="widget-product-meta"><span
-                                                                class="text-accent me-2">$79.<small>50</small></span><span
-                                                                class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button"
-                                                    aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                                                        href="shop-single-v1.html"><img
-                                                            src="img/shop/cart/widget/03.jpg" width="64"
-                                                            alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a
-                                                                href="shop-single-v1.html">3-Color Sun Stash Hat</a>
-                                                        </h6>
-                                                        <div class="widget-product-meta"><span
-                                                                class="text-accent me-2">$22.<small>50</small></span><span
-                                                                class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button"
-                                                    aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                                                        href="shop-single-v1.html"><img
-                                                            src="img/shop/cart/widget/04.jpg" width="64"
-                                                            alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a
-                                                                href="shop-single-v1.html">Cotton Polo Regular Fit</a>
-                                                        </h6>
-                                                        <div class="widget-product-meta"><span
-                                                                class="text-accent me-2">$9.<small>00</small></span><span
-                                                                class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <?php }?>
                                         </div>
                                         <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
                                             <div class="fs-sm me-2 py-2"><span class="text-muted">Subtotal:</span><span
-                                                    class="text-accent fs-base ms-1">$265.<small>00</small></span></div>
-                                            <a class="btn btn-outline-secondary btn-sm" href="shop-cart.html">Expand
+                                                    class="text-accent fs-base ms-1"><?= $cart_total ?><small>Đ</small></span></div>
+                                            <a class="btn btn-outline-secondary btn-sm" href="cart.php">Expand
                                                 cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
                                         </div><a class="btn btn-primary btn-sm d-block w-100"
-                                            href="checkout-details.html"><i
+                                            href="check-out.php"><i
                                                 class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
                                     </div>
                                 </div>
@@ -446,60 +269,34 @@ require_once('files/functions.php');
 
                             <!-- Primary menu-->
                             <ul class="navbar-nav">
-                                <li class="nav-item dropdown active"><a class="nav-link dropdown-toggle" href="#"
-                                        data-bs-toggle="dropdown">Home</a>
+                                <li class="nav-item dropdown active"><a class="nav-link dropdown-toggle" href="<?= url('') ?>"
+                                        >Trang Chủ</a>
 
                                 </li>
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-bs-toggle="dropdown">Shop</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="shop.php">Shop</a>
                                     <div class="dropdown-menu p-0">
                                         <div class="d-flex flex-wrap flex-sm-nowrap px-2">
                                             <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
-                                                <div class="widget widget-links mb-4">
-                                                    <a href="">
-                                                    <h6 class="fs-base mb-3">Nhẫn Cưới</h6>
-                                                    </a>
-                                                    
-                                                </div>
-                                                <div class="widget widget-links mb-4">
-                                                    <a href="">
-                                                    <h6 class="fs-base mb-3">Nhẫn Cầu Hôn</h6>
-                                                    </a>
-                                                    
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <a href="">
-                                                    <h6 class="fs-base mb-3">Dây Chuyển</h6>
-                                                    </a>
-                                                    
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <a href=""></a>
-                                                    <h6 class="fs-base mb-3">Vòng Tay</h6>
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <a href="#">
-                                                    <h6 class="fs-base mb-3">Khuyên Tai</h6>
-                                                    </a>  
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <a href="">
-                                                    <h6 class="fs-base mb-3">Lắc</h6>
-                                                    </a>
-                                                    
-                                                </div>
+                                                <?php foreach ($categories as $category): ?>
+                                                    <div class="widget widget-links mb-4">
+                                                        <a href="shop.php?category_id=<?php echo $category['id']; ?>"> <!-- Thay đổi đường dẫn cho phù hợp -->
+                                                            <p style="color: black;" class="fs-base mb-3"><?php echo htmlspecialchars($category['name']); ?></p>
+                                                        </a>
+                                                    </div>
+                                                <?php endforeach; ?>
                                             </div>                            
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">Account</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">Tài Khoản</a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-bs-toggle="dropdown">Shop User Account</a>
+                                                data-bs-toggle="dropdown">Tài khoản người dùng</a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="account-orders.html">Orders
-                                                        History</a></li>
+                                                <li><a class="dropdown-item" href="account-orders.html">Lịch sử đặt hàng</a></li>
                                                 <li><a class="dropdown-item" href="account-profile.html">Profile
                                                         Settings</a></li>
                                                 <li><a class="dropdown-item" href="account-address.html">Account
@@ -514,42 +311,7 @@ require_once('files/functions.php');
                                                         Ticket</a></li>
                                             </ul>
                                         </li>
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-bs-toggle="dropdown">Vendor Dashboard</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="dashboard-settings.html">Settings</a>
-                                                </li>
-                                                <li><a class="dropdown-item"
-                                                        href="dashboard-purchases.html">Purchases</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="dashboard-favorites.html">Favorites</a></li>
-                                                <li><a class="dropdown-item" href="dashboard-sales.html">Sales</a></li>
-                                                <li><a class="dropdown-item" href="dashboard-products.html">Products</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="dashboard-add-new-product.html">Add
-                                                        New Product</a></li>
-                                                <li><a class="dropdown-item" href="dashboard-payouts.html">Payouts</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-bs-toggle="dropdown">NFT Marketplace<span
-                                                    class="badge bg-danger ms-1">NEW</span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="nft-account-settings.html">Profile
-                                                        Settings</a></li>
-                                                <li><a class="dropdown-item" href="nft-account-payouts.html">Wallet
-                                                        &amp; Payouts</a></li>
-                                                <li><a class="dropdown-item" href="nft-account-my-items.html">My
-                                                        Items</a></li>
-                                                <li><a class="dropdown-item" href="nft-account-my-collections.html">My
-                                                        Collections</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="nft-account-favorites.html">Favorites</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="nft-account-notifications.html">Notifications</a></li>
-                                            </ul>
-                                        </li>
+
                                         <li><a class="dropdown-item" href="login.php">Sign In / Sign Up</a>
                                         </li>
                                         <li><a class="dropdown-item" href="account-password-recovery.html">Password

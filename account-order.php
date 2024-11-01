@@ -1,4 +1,5 @@
 
+
 <?php
 require_once('files/functions.php');
 protected_erea();
@@ -39,7 +40,7 @@ protected_erea();
                   <option>Delayed</option>
                   <option>Canceled</option>
                 </select>
-              </div><a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="login.php"><i class="ci-sign-out me-2"></i>Sign out</a>
+              </div><a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="logout.php"><i class="ci-sign-out me-2"></i>Sign out</a>
             </div>
           </section>
         </div>

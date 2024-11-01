@@ -23,7 +23,12 @@
       <ul class="list-unstyled mb-0">
         <li class="border-bottom mb-0">
           <a class="nav-link-style d-flex align-items-center px-4 py-3" href="admin-products-add.php">
-            <i class="ci-user opacity-60 me-2"></i>Create Products 
+            <i class="ci-user opacity-60 me-2"></i>Create Product 
+          </a>
+        </li>
+        <li class="border-bottom mb-0">
+          <a class="nav-link-style d-flex align-items-center px-4 py-3" href="admin-products.php">
+            <i class="ci-user opacity-60 me-2"></i>Products
           </a>
         </li>
         <li class="border-bottom mb-0">

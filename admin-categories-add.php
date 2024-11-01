@@ -14,9 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $_SESSION['form']['value'] = $_POST;
   $imgs = upload_images($_FILES);
   $data['name'] = $_POST['name'];
+  $data['parent_id'] = (int)($_POST['parent_id']);
   $data['description'] = $_POST['description'];
   $data['photo'] = json_encode($imgs);
-  $data['parent_id'] = 0;
+  
+  
+  
 
   if (db_insert('categories', $data)) {
     alert('success', 'Tạo dữ liệu mưới thành công.');
@@ -72,12 +75,7 @@ require_once('files/header.php');
             <div class="row mt-4">
               <div class="col-md-6">
                 <div class="form-group">
-            <?= select_input(
-                [
-                  'name'=> 'name',
-                  'label' => 'Parent Categories',
-                ],$categories
-                  ) ?>
+                <?= text_input([ 'name' => 'parent_id', 'label' => 'Parent Categories', ], $categories) ?>
                 </div>
               </div>
               <div class="col-md-6">
