@@ -212,19 +212,6 @@ function upload_images($files)
     return $uploaded_images;
 }
 
-function load_cart_from_db($user_id) {
-    global $conn;
-    $sql = "SELECT cart_content FROM carts WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $cart_content = $result->fetch_assoc()['cart_content'];
-    $stmt->close();
-
-    return $cart_content ? json_decode($cart_content, true) : [];
-}
-
 
 
 define('BASE_URL', 'http://localhost/jewellery');
@@ -288,8 +275,7 @@ function login_user($email, $password)
 
     $_SESSION['user'] = $row;
 
-    // Tải giỏ hàng từ cơ sở dữ liệu khi đăng nhập
-    $_SESSION['cart'] = load_cart_from_db($row['id']);
+    
 
     return true;
 }
