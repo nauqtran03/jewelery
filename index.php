@@ -96,7 +96,7 @@ $products = db_select('products', '1 ORDER BY id DESC');
           <div class="py-1">
             <h5 class="mb-2">Your Add Banner Here</h5>
             <p class="fs-sm text-muted">Hurry up to reserve your spot</p><a class="btn btn-primary btn-shadow btn-sm"
-              href="#">Contact us</a>
+              href="contact.php">Contact us</a>
           </div>
         </div>
       </div>
