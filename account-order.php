@@ -1,9 +1,7 @@
-
-
 <?php
 require_once('files/functions.php');
 protected_erea();
-    require_once('files/header.php');
+require_once('files/header.php');
 ?>
 
 <div class="page-title-overlap bg-dark pt-4">
@@ -49,4 +47,4 @@ protected_erea();
 
       <?php
     require_once('files/footer.php');
-?>  
+?>

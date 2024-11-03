@@ -115,42 +115,42 @@ foreach ($products as $product) {
 
       <!-- Pagination-->
       <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-        <ul class="pagination">
-          <?php if ($current_page > 1): ?>
-              <li class="page-item">
-                  <a class="page-link" href="?page=<?php echo $current_page - 1; ?>&category_id=<?php echo $category_id; ?>">
-                      <i class="ci-arrow-left me-2"></i>Prev
-                  </a>
-              </li>
-          <?php else: ?>
-              <li class="page-item disabled">
-                  <span class="page-link"><i class="ci-arrow-left me-2"></i>Prev</span>
-              </li>
-          <?php endif; ?>
-        </ul>
-        <ul class="pagination">
-          <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-              <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>" aria-current="<?php echo ($i == $current_page) ? 'page' : ''; ?>">
-                  <a class="page-link" href="?page=<?php echo $i; ?>&category_id=<?php echo $category_id; ?>">
-                      <?php echo $i; ?>
-                  </a>
-              </li>
-          <?php endfor; ?>
-        </ul>
-        <ul class="pagination">
-          <?php if ($current_page < $total_pages): ?>
-              <li class="page-item">
-                  <a class="page-link" href="?page=<?php echo $current_page + 1; ?>&category_id=<?php echo $category_id; ?>" aria-label="Next">
-                      Next<i class="ci-arrow-right ms-2"></i>
-                  </a>
-              </li>
-          <?php else: ?>
-              <li class="page-item disabled">
-                  <span class="page-link">Next<i class="ci-arrow-right ms-2"></i></span>
-              </li>
-          <?php endif; ?>
-        </ul>
-      </nav>
+    <ul class="pagination">
+        <?php if ($current_page > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?php echo $current_page - 1; ?>">
+                    <i class="ci-arrow-left me-2"></i>Prev
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="page-item disabled">
+                <span class="page-link"><i class="ci-arrow-left me-2"></i>Prev</span>
+            </li>
+        <?php endif; ?>
+    </ul>
+    <ul class="pagination">
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>" aria-current="<?php echo ($i == $current_page) ? 'page' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $i; ?>">
+                    <?php echo $i; ?>
+                </a>
+            </li>
+        <?php endfor; ?>
+    </ul>
+    <ul class="pagination">
+        <?php if ($current_page < $total_pages): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?php echo $current_page + 1; ?>" aria-label="Next">
+                    Next<i class="ci-arrow-right ms-2"></i>
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="page-item disabled">
+                <span class="page-link">Next<i class="ci-arrow-right ms-2"></i></span>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
     </section>
     <!-- Sidebar with banners-->
     <aside class="col-lg-4 d-none d-lg-block">

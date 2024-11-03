@@ -7,6 +7,15 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 $conn = new mysqli('localhost', 'root', '', 'jewelry');
 
+function save_cart_to_db($user_id, $cart) {
+    global $conn;
+    $cart_content = json_encode($cart);
+    $sql = "REPLACE INTO carts (user_id, cart_content) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $user_id, $cart_content);
+    $stmt->execute();
+    $stmt->close();
+}
 function get_product($id)
 {
     global $conn;
@@ -203,6 +212,18 @@ function upload_images($files)
     return $uploaded_images;
 }
 
+function load_cart_from_db($user_id) {
+    global $conn;
+    $sql = "SELECT cart_content FROM carts WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $cart_content = $result->fetch_assoc()['cart_content'];
+    $stmt->close();
+
+    return $cart_content ? json_decode($cart_content, true) : [];
+}
 
 
 
@@ -222,12 +243,19 @@ function protected_erea()
 }
 function logout()
 {
-    if (isset($_SESSION['user'])) {
-        unset($_SESSION['user']);
+    function logout() {
+        if (isset($_SESSION['user'])) {
+            $user_id = $_SESSION['user']['id'];
+            if (isset($_SESSION['cart'])) {
+                save_cart_to_db($user_id, $_SESSION['cart']);
+            }
+            unset($_SESSION['user']);
+            unset($_SESSION['cart']);
+        }
+        alert('success', 'Đăng xuất thành công.');
+        header('Location: login.php');
+        die();
     }
-    alert('success', 'Đăng xuất thành công.');
-    header('Location: login.php');
-    die();
 }
 function is_logged_in()
 {
@@ -247,21 +275,21 @@ function login_user($email, $password)
 {
 
     global $conn;
-    $sql = "SELECT * FROM users WHERE email ='{$email}'";
+    $sql = "SELECT * FROM users WHERE email = '{$email}'";
     $res = $conn->query($sql);
     if ($res->num_rows < 1) {
         return false;
     }
-
 
     $row = $res->fetch_assoc();
     if (!password_verify($password, $row['mat_khau'])) {
         return false;
     }
 
-
     $_SESSION['user'] = $row;
 
+    // Tải giỏ hàng từ cơ sở dữ liệu khi đăng nhập
+    $_SESSION['cart'] = load_cart_from_db($row['id']);
 
     return true;
 }
@@ -298,6 +326,21 @@ function text_input($data)
         '<label class="form-label text-capitalize" for="' . $name . '">' . $label . '</label>
     <input name ="' . $name . '" value="' . $value . '" class="form-control" type="text" id="'.$name.'" placeholder ="' . $label . '" ' . $attributes . '>'
         . $error_text;
+}
+function add_to_cart($product_id, $quantity) {
+    // Kiểm tra xem giỏ hàng đã được khởi tạo chưa
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = []; // Khởi tạo giỏ hàng nếu chưa có
+    }
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+    if (isset($_SESSION['cart'][$product_id])) {
+        // Nếu sản phẩm đã có, cập nhật số lượng
+        $_SESSION['cart'][$product_id] += $quantity;
+    } else {
+        // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
+        $_SESSION['cart'][$product_id] = $quantity;
+    }
 }
 function select_input($data, $options)
 {
@@ -356,11 +399,7 @@ function product_item_ui_1($pro)
                     <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
                     </div>
                   </div>
-                  <div class="card-body card-body-hidden">
-                    <div class="pb-2">
-                    </div>
-                    <button class="btn btn-primary btn-sm mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -399,10 +438,6 @@ function product_item_ui_3($pro){
                   <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
                   </div>
                 </div>
-              </div>
-              <div class="card-body card-body-hidden">
-                <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
-                
               </div>
             </div>
             <hr class="d-sm-none">
@@ -455,3 +490,28 @@ function product_item_ui_5($pro){
     EOF;
     return $str;
 }
+function product_item_ui_6($pro){
+    $thumb = get_product_thumb($pro['photo']);
+    $str = <<<EOF
+        <div>
+          <div class="card product-card card-static">
+            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
+              title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden"
+              href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
+            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}">{$pro['name']}</a>
+              <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
+              <div class="d-flex justify-content-between">
+                <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
+                    class="star-rating-icon ci-star-filled active"></i><i
+                    class="star-rating-icon ci-star-filled active"></i><i
+                    class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    EOF;
+    return $str;
+}
+

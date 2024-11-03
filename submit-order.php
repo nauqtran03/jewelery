@@ -1,20 +1,11 @@
 <?php
 require_once('files/functions.php');
 $user = $_SESSION['user'];
-
-$shipping = isset($_SESSION['shipping']) ? $_SESSION['shipping'] : [];
-$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-$userData = isset($_SESSION['user']) ? $_SESSION['user'] : [];
-echo"<pre>";
-print_r([
-    'custumer_id'=> $user['id'],
-    'order_status' => 1,
-    'shipping'=> json_encode($_SESSION['shipping']),
-    'cart' => json_encode($_SESSION['cart']),
-    'user' => json_encode($_SESSION['user']),
-    'order_date' =>time()
-]);
-die();
+$total = 0;
+foreach($_SESSION['cart'] as $key =>$val){
+    $total += $val['quantity']* $val['pro']['buying_price'];
+ 
+}
 db_insert(
     'orders',
     [
@@ -23,6 +14,13 @@ db_insert(
         'shipping'=> json_encode($_SESSION['shipping']),
         'cart' => json_encode($_SESSION['cart']),
         'user' => json_encode($_SESSION['user']),
-        'order_date' =>time()
+        'order_date' =>time(),
+        'total_price' => $total,
     ]
 );
+
+$_SESSION['cart'] = null;
+unset($_SESSION['carrt']);
+unset($_SESSION['shipping']);
+
+header('Location: checkout-complete.php');

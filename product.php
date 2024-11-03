@@ -15,7 +15,7 @@ if ($pro == null) {
   die("Không tìm thấy sản phẩm");
 }
 $images = get_product_photo($pro['photo']);
-
+$products = db_select('products', '1 ORDER BY id DESC');
 ?>
 <!-- Page Title-->
 <div class="page-title-overlap bg-dark pt-4">
@@ -53,7 +53,7 @@ $images = get_product_photo($pro['photo']);
                     <img class="image-zoom" src="<?= $img->thumb ?>" data-zoom="<?= $img->src ?>" alt="Product image">
                   </div>
                   <?php
-                  $active_class = ''; // Chỉ kích hoạt lớp `active` cho ảnh đầu tiên
+                  $active_class = ''; // Chỉ kích hoạt lớp active cho ảnh đầu tiên
                 } ?>
               </div>
 
@@ -68,8 +68,7 @@ $images = get_product_photo($pro['photo']);
                 </a>
                 <?php $active_class = "";
               } ?>
-              <a class="product-gallery-thumblist-item video-item" href="https://www.youtube.com/watch?v=1vrXpMLLK14">
-                <div class="product-gallery-thumblist-item-text"><i class="ci-video"></i>Video</div>
+              
               </a>
             </div>
           </div>
@@ -92,6 +91,7 @@ $images = get_product_photo($pro['photo']);
               <del class="text-muted fs-lg me-3"><?= $pro['price'] ?><small>Đ</small></del><span
                 class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
             </div>
+
             <form action="cart-process-add.php" class="mb-grid-gutter" method="post">
               <input type="hidden" name="id" value="<?= $pro['id'] ?>">
               <div class="mb-3 d-flex align-items-center">
@@ -102,10 +102,20 @@ $images = get_product_photo($pro['photo']);
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
-                <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
-                    class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                <?php if (isset($_SESSION['user'])): ?>
+                  <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
+                      class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                <?php else: ?>
+                  <?php
+
+                  alert('warning', 'Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng.');
+                  ?>
+                  <button class="btn btn-secondary d-block w-100" type="button"
+                    onclick="window.location.href='login.php'"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                <?php endif; ?>
               </div>
             </form>
+
             <!-- Product panels-->
             <div class="accordion mb-4" id="productPanels">
               <div class="accordion-item">
@@ -140,24 +150,18 @@ $images = get_product_photo($pro['photo']);
       <div class="tns-carousel-inner"
         data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
         <!-- Product-->
-        <div>
-          <div class="card product-card card-static">
-            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
-              title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden"
-              href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-              <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
-              <div class="d-flex justify-content-between">
-                <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                    class="star-rating-icon ci-star-filled active"></i><i
-                    class="star-rating-icon ci-star-filled active"></i><i
-                    class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <?php
+        $count = 0; // Khởi tạo biến đếm
+        foreach ($products as $key => $pro) {
+          if ($count < 12) { // Chỉ hiển thị nếu số lượng sản phẩm chưa đạt 8
+            echo product_item_ui_6($pro);
+            $count++; // Tăng biến đếm lên 1 sau khi hiển thị sản phẩm
+          }
+        }
+        ?>
+
+
+
       </div>
     </div>
   </div>
@@ -166,14 +170,14 @@ $images = get_product_photo($pro['photo']);
   ?>
   <script>
     document.querySelectorAll('.product-gallery-thumblist-item').forEach((thumb, index) => {
-        thumb.addEventListener('click', function(event) {
-            event.preventDefault();
-            // Ẩn tất cả ảnh trong gallery
-            document.querySelectorAll('.product-gallery-preview-item').forEach(item => {
-                item.style.display = 'none';
-            });
-            // Hiện ảnh được chọn
-            document.getElementById('pro-' + index).style.display = 'block';
+      thumb.addEventListener('click', function (event) {
+        event.preventDefault();
+        // Ẩn tất cả ảnh trong gallery
+        document.querySelectorAll('.product-gallery-preview-item').forEach(item => {
+          item.style.display = 'none';
         });
+        // Hiện ảnh được chọn
+        document.getElementById('pro-' + index).style.display = 'block';
+      });
     });
-</script>
+  </script>

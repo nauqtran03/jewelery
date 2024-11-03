@@ -11,4 +11,4 @@ $pro['quantity'] = ((int)($_POST['quantity']));
 $_SESSION['cart'][$id] = $pro;
 
 alert('success','Sản phẩm đã được thêm thành công vào giỏ hàng.');
-header('Location: shop.php');
+header('Location: cart.php');

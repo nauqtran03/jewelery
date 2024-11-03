@@ -7,7 +7,7 @@ $password = trim($_POST['mat_khau']);
 
 if(login_user($email,$password)){
     alert('success','Bạn đã đăng nhập thành công.');
-    header('Location: account-order.php');
+    header('Location: index.php');
     die();
 }else{
     alert('danger','Bạn nhập sai tài khoản hoặc mật khẩu.');

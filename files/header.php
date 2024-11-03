@@ -70,81 +70,15 @@ if(isset($_SESSION['cart'])){
     <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-secondary">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab"
-                                data-bs-toggle="tab" role="tab" aria-selected="true"><i
-                                    class="ci-unlocked me-2 mt-n1"></i>Sign in</a></li>
-                        <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab"
-                                role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign up</a></li>
-                    </ul>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body tab-content py-4">
-                    <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                        id="signin-tab">
-                        <div class="mb-3">
-                            <label class="form-label" for="si-email">Email address</label>
-                            <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com"
-                                required>
-                            <div class="invalid-feedback">Please provide a valid email address.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="si-password">Password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="si-password" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span
-                                        class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="mb-3 d-flex flex-wrap justify-content-between">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="si-remember">
-                                <label class="form-check-label" for="si-remember">Remember me</label>
-                            </div><a class="fs-sm" href="#">Forgot password?</a>
-                        </div>
-                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-                    </form>
-                    <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-                        <div class="mb-3">
-                            <label class="form-label" for="su-name">Full name</label>
-                            <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
-                            <div class="invalid-feedback">Please fill in your name.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="su-email">Email address</label>
-                            <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com"
-                                required>
-                            <div class="invalid-feedback">Please provide a valid email address.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="su-password">Password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="su-password" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span
-                                        class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="su-password-confirm">Confirm password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="su-password-confirm" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span
-                                        class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
+    <script>
+    // Khi modal được hiển thị, tự động chuyển hướng tới login.php
+    document.getElementById('signin-modal').addEventListener('shown.bs.modal', function () {
+        window.location.href = 'login.php';
+    });
+    </script>
     <main class="page-wrapper">
         <!-- Quick View Modal-->
         
@@ -157,22 +91,15 @@ if(isset($_SESSION['cart'])){
                             data-bs-toggle="dropdown">Useful links</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="tel:00331697720"><i
-                                        class="ci-support text-muted me-2"></i>(00) 33 169 7720</a></li>
+                                        class="ci-support text-muted me-2"></i>(84)977777777</a></li>
                             <li><a class="dropdown-item" href="order-tracking.html"><i
                                         class="ci-location text-muted me-2"></i>Order tracking</a></li>
                         </ul>
                     </div>
                     <div class="topbar-text text-nowrap d-none d-md-inline-block"><i class="ci-support"></i><span
-                            class="text-muted me-1">Support</span><a class="topbar-link" href="tel:00331697720">(00) 33
-                            169 7720</a></div>
-                    <div class="tns-carousel tns-controls-static d-none d-md-block">
-                        <div class="tns-carousel-inner"
-                            data-carousel-options="{&quot;mode&quot;: &quot;gallery&quot;, &quot;nav&quot;: false}">
-                            <div class="topbar-text">Free shipping for order over $200</div>
-                            <div class="topbar-text">We return money within 30 days</div>
-                            <div class="topbar-text">Friendly 24/7 customer support</div>
-                        </div>
-                    </div>
+                            class="text-muted me-1">Support</span><a class="topbar-link" href="tel:00331697720">(84)977777777</a></div>
+                            <div class="topbar-text text-nowrap d-none d-md-inline-block"><span
+                            class="text-muted me-1"></span><a style="text-align: center;"le class="topbar-link" href="#">Welcome To My Shop</a></div>
                 </div>
             </div>
             <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
@@ -249,9 +176,7 @@ if(isset($_SESSION['cart'])){
                                                     class="text-accent fs-base ms-1"><?= $cart_total ?><small>Đ</small></span></div>
                                             <a class="btn btn-outline-secondary btn-sm" href="cart.php">Expand
                                                 cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
-                                        </div><a class="btn btn-primary btn-sm d-block w-100"
-                                            href="check-out.php"><i
-                                                class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -290,32 +215,21 @@ if(isset($_SESSION['cart'])){
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#"
-                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">Tài Khoản</a>
+                                    <a class="nav-link" href="account-order.php">Tài Khoản</a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
                                                 data-bs-toggle="dropdown">Tài khoản người dùng</a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="account-orders.html">Lịch sử đặt hàng</a></li>
-                                                <li><a class="dropdown-item" href="account-profile.html">Profile
+                                                <li><a class="dropdown-item" href="#">Lịch sử đặt hàng</a></li>
+                                                <li><a class="dropdown-item" href="#">Profile
                                                         Settings</a></li>
-                                                <li><a class="dropdown-item" href="account-address.html">Account
+                                                <li><a class="dropdown-item" href="#">Account
                                                         Addresses</a></li>
-                                                <li><a class="dropdown-item" href="account-payment.html">Payment
+                                                <li><a class="dropdown-item" href="#">Payment
                                                         Methods</a></li>
-                                                <li><a class="dropdown-item" href="account-wishlist.html">Wishlist</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="account-tickets.html">My Tickets</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="account-single-ticket.html">Single
-                                                        Ticket</a></li>
                                             </ul>
                                         </li>
-
-                                        <li><a class="dropdown-item" href="login.php">Sign In / Sign Up</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="account-password-recovery.html">Password
-                                                Recovery</a></li>
+                                        <li><a class="dropdown-item" href="login.php">Sign In / Sign Up</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
@@ -323,19 +237,9 @@ if(isset($_SESSION['cart'])){
                                     <ul class="dropdown-menu">
 
                                         <li class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="about.html">About Us</a></li>
-                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-bs-toggle="dropdown">Help Center</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="help-topics.html">Help Topics</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="help-single-topic.html">Single
-                                                        Topic</a></li>
-                                                <li><a class="dropdown-item" href="help-submit-request.html">Submit a
-                                                        Request</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a class="dropdown-item" href="about.php">About Us</a></li>
+                                        <li><a class="dropdown-item" href="contact.php">Contacts</a></li>
+                                        
                                     </ul>
                                 </li>
                             </ul>
