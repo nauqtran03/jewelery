@@ -70,19 +70,19 @@
                   <div class="invalid-feedback">Làm ơn điền số điện thoại!</div>
                 </div>
                 <div class="col-sm-6">
-                  <label class="form-label" for="reg-address">Địa chỉ</label>
-                  <input class="form-control" name="dia_chi" type="text" required id="reg-address">
-                  <div class="invalid-feedback">Làm ơn điền địa chỉ!</div>
-                </div>
-                <div class="col-sm-6">
                   <label class="form-label" for="reg-password">Mật khẩu</label>
                   <input class="form-control" name="mat_khau" type="password" required id="reg-password">
                   <div class="invalid-feedback">Làm ơn điền mật khẩu!</div>
                 </div>
+                <div class="col-sm-6">
+                  <label class="form-label" for="reg-password">Nhập lại mật khẩu</label>
+                  <input class="form-control" name="mat_khau_1" type="password" required id="reg-password-confirm">
+                  <div class="invalid-feedback">Làm ơn điền mật khẩu!</div>
+                </div>
                 <div class="col-sm-12">
-                  <label style="margin-left: 310px" class="form-label" for="reg-password-confirm">Nhập lại mật khẩu</label>
-                  <input style="margin-left: 310px; width: 290px" class="form-control" name="mat_khau_1" type="password" required id="reg-password-confirm">
-                  <div class="invalid-feedback">Mật khẩu không trùng khớp!</div>
+                  <label class="form-label" for="reg-address">Địa chỉ</label>
+                  <input class="form-control" name="dia_chi" type="text" required id="reg-address">
+                  <div class="invalid-feedback">Làm ơn điền địa chỉ!</div>
                 </div>
                 <div class="col-12 text-end">
                   <button class="btn btn-primary" type="submit"><i class="ci-user me-2 ms-n1"></i>Đăng Kí</button>

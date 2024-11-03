@@ -3,32 +3,15 @@ require_once('files/functions.php');
 require_once('files/header.php');
 
 // Kiểm tra nếu người dùng đã đăng nhập
-$cart_items = [];
+$cart_items = $_SESSION['cart'] ?? [];
 $subtotal = 0;
-$cart_items = $_SESSION['cart'];
-    
+
 // Tính tổng giá trị giỏ hàng
 foreach ($cart_items as $item) {
     $subtotal += $item['pro']['buying_price'] * $item['quantity'];
 }
-// Kiểm tra nếu người dùng đã đăng nhập và có giỏ hàng
-// if (isset($_SESSION['user'])) {
-//     // Nếu session giỏ hàng có sẵn, dùng nó, nếu không lấy từ cơ sở dữ liệu
-//     // if (!isset($_SESSION['cart'])) {
-//     //     $_SESSION['cart'] = load_cart_from_db($_SESSION['user']['id']);
-//     // }
-    
-//     $cart_items = $_SESSION['cart'];
-    
-//     // Tính tổng giá trị giỏ hàng
-//     foreach ($cart_items as $item) {
-//         $subtotal += $item['pro']['buying_price'] * $item['quantity'];
-//     }
-// }
 
 // Kiểm tra giỏ hàng có trống không
-$cart_items = $_SESSION['cart'] ?? [];
-// Tính tổng giá trị giỏ hàng
 $is_cart_empty = empty($cart_items);
 ?>
 
