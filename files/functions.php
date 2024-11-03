@@ -392,7 +392,7 @@ function product_item_ui_1($pro)
               <div class="card product-card product-list">
               <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
               <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                   <h3 class="product-title fs-base"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                   <div class="d-flex justify-content-between">
                     <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
@@ -431,7 +431,7 @@ function product_item_ui_3($pro){
             <div class="card product-card">
               <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
               <a class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                 <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                 <div class="d-flex justify-content-between">
                   <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
@@ -452,7 +452,7 @@ function product_item_ui_4($pro){
                       <div class="card product-card card-static">
                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}">
                         <img src="{$thumb}" alt="Product"></a>
-                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                           <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                           <div class="d-flex justify-content-between">
                             <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
@@ -474,7 +474,7 @@ function product_item_ui_5($pro){
                     title="Add to wishlist"><i class="ci-heart"></i></button><a
                     class="card-img-top d-block overflow-hidden" href="product.php?id={$pro['id']}"><img
                       src="{$thumb}" alt="Product"></a>
-                  <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                  <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                     <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                     <div class="d-flex justify-content-between">
                       <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
@@ -498,8 +498,8 @@ function product_item_ui_6($pro){
             <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
               title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden"
               href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
-            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}">{$pro['name']}</a>
-              <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
+            <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
+              <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
               <div class="d-flex justify-content-between">
                 <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
                 <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
