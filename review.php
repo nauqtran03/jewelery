@@ -75,9 +75,9 @@ $u = $_SESSION['user'];
               <div class="d-block d-sm-flex align-items-center text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="product.php?id=<?= $item['pro']['id']?>"><img src="<?= get_product_thumb($item['pro']['photo']) ?>" width="160" alt="Product"></a>
                 <div class="pt-2">
                   <h3 class="product-title fs-base mb-2"><a href="product.php?id=<?= $item['pro']['id']?>"><?= substr($item['pro']['name'],0,45) ?></a></h3>
-                  <div class="fs-sm"><span class="text-muted me-2">Giá: <?= $item['pro']['buying_price']?>đ</span></div>
+                  <div class="fs-sm"><span class="text-muted me-2">Giá: <?= number_format($item['pro']['buying_price'])?>đ</span></div>
                   <!-- <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div> -->
-                  <div class="fs-lg text-accent pt-2">Tổng: <?= $item['pro']['buying_price']*$item['quantity'] ?><small>Đ</small></div>
+                  <div class="fs-lg text-accent pt-2">Tổng: <?= number_format( $item['pro']['buying_price']*$item['quantity']) ?><small>Đ</small></div>
                 </div>
               </div>
               <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">

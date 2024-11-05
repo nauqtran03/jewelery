@@ -13,7 +13,7 @@ protected_erea();
                 <li class="breadcrumb-item"><a class="text-nowrap" href="<?= url('') ?>"><i class="ci-home"></i>Home</a></li>
                 <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
                 </li>
-                <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page">My orders</li>
               </ol>
             </nav>
           </div>

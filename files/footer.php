@@ -3,8 +3,8 @@
     <footer class="footer bg-dark pt-5">
       <div class="container">
                 <h4 style="color: #fff; text-align: left">Trần Quang Quân - DHTI15A5HN - 21103100304</h4>
-                <h4 style="color: #ccc; text-align: center">Nguyễn Tấn Ngọc - DHTI15A5HN - 21103100304</h4>
-                <h4 style="color: #fff; text-align: right">Lê Thị Ngọc Ánh - DHTI15A5HN - 21103100304</h4><br>
+                <h4 style="color: #ccc; text-align: center">Nguyễn Tấn Ngọc - DHTI15A5HN - 21103100101</h4>
+                <h4 style="color: #fff; text-align: right">Lê Thị Ngọc Ánh - DHTI15A5HN - 21103100325</h4><br>
                 <h4 style="color: #ccc; text-align: center">Do not reup.</h4>
       </div>
     </footer>

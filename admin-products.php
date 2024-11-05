@@ -16,7 +16,7 @@ require_once('files/header.php');
           <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Home</a></li>
           <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
           </li>
-          <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">Products</li>
         </ol>
       </nav>
     </div>

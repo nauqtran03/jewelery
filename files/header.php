@@ -92,14 +92,13 @@ if(isset($_SESSION['cart'])){
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="tel:00331697720"><i
                                         class="ci-support text-muted me-2"></i>(84)977777777</a></li>
-                            <li><a class="dropdown-item" href="order-tracking.html"><i
-                                        class="ci-location text-muted me-2"></i>Order tracking</a></li>
+                            
                         </ul>
                     </div>
                     <div class="topbar-text text-nowrap d-none d-md-inline-block"><i class="ci-support"></i><span
-                            class="text-muted me-1">Support</span><a class="topbar-link" href="tel:00331697720">(84)977777777</a></div>
+                            class="text-muted me-1">Hỗ Trợ</span><a class="topbar-link" href="tel:00331697720">(84)977777777</a></div>
                             <div class="topbar-text text-nowrap d-none d-md-inline-block"><span
-                            class="text-muted me-1"></span><a style="text-align: center;"le class="topbar-link" href="#">Welcome To My Shop</a></div>
+                            class="text-muted me-1"></span><a style="text-align: center;"le class="topbar-link" href="#">Xin Chào Bạn Đến Với Cửa Hàng</a></div>
                 </div>
             </div>
             <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
@@ -111,7 +110,7 @@ if(isset($_SESSION['cart'])){
                                 src="img/logo-icon.png" width="74" alt="Cartzilla"></a>
                         <div class="input-group d-none d-lg-flex mx-4">
                             <input class="form-control rounded-end pe-5" type="text"
-                                placeholder="Search for products"><i
+                                placeholder="Tìm kiếm sản phẩm"><i
                                 class="ci-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
                         </div>
                         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
@@ -135,17 +134,17 @@ if(isset($_SESSION['cart'])){
                                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                                 <div class="navbar-tool-text ms-n3">
                                     <?php if(is_logged_in()) { ?>
-                                    <small>Hello, <?= $_SESSION['user']['ten_tai_khoan'] ?></small>
+                                    <small>Xin Chào, <?= $_SESSION['user']['ten_tai_khoan'] ?></small>
                                     <?php } else { ?>
-                                        <small>Hello, Sign in</small>
+                                        <small>Xin Chào, Đăng Nhập</small>
                                     <?php } ?>
-                                    My Account</div>
+                                    Tài Khoản Của Tôi</div>
                             </a>
                             <div class="navbar-tool dropdown ms-3"><a
                                     class="navbar-tool-icon-box bg-secondary dropdown-toggle"
                                     href="cart.php"><span class="navbar-tool-label"><?= $cart_count ?></span><i
                                         class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text"
-                                    href="cart.php"><small>My Cart</small><?= $cart_total ?>đ</a>
+                                    href="cart.php"><small>Giỏ Hàng</small><?= number_format($cart_total) ?>đ</a>
                                 <!-- Cart dropdown-->
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
@@ -164,7 +163,7 @@ if(isset($_SESSION['cart'])){
                                                                 href="product.php?id=<?= $item['pro']['id']?>"><?= substr($item['pro']['name'],0,30) ?>...</a>
                                                         </h6>
                                                         <div class="widget-product-meta"><span
-                                                                class="text-accent me-2"><?= $item['pro']['buying_price'] ?><small>Đ</small></span><span
+                                                                class="text-accent me-2"><?= number_format( $item['pro']['buying_price']) ?><small>Đ</small></span><span
                                                                 class="text-muted">x <?= $item['quantity'] ?></span></div>
                                                     </div>
                                                 </div>
@@ -172,10 +171,9 @@ if(isset($_SESSION['cart'])){
                                                 <?php }?>
                                         </div>
                                         <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                                            <div class="fs-sm me-2 py-2"><span class="text-muted">Subtotal:</span><span
-                                                    class="text-accent fs-base ms-1"><?= $cart_total ?><small>Đ</small></span></div>
-                                            <a class="btn btn-outline-secondary btn-sm" href="cart.php">Expand
-                                                cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
+                                            <div class="fs-sm me-2 py-2"><span class="text-muted">Tổng:</span><span
+                                                    class="text-accent fs-base ms-1"><?= number_format($cart_total) ?><small>Đ</small></span></div>
+                                            <a class="btn btn-outline-secondary btn-sm" href="cart.php">Vào giỏ hàng<i class="ci-arrow-right ms-1 me-n1"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +187,7 @@ if(isset($_SESSION['cart'])){
                             <!-- Search-->
                             <div class="input-group d-lg-none my-3"><i
                                     class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-                                <input class="form-control rounded-start" type="text" placeholder="Search for products">
+                                <input class="form-control rounded-start" type="text" placeholder="">
                             </div>
 
                             <!-- Primary menu-->
@@ -199,7 +197,7 @@ if(isset($_SESSION['cart'])){
 
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="shop.php">Shop</a>
+                                    <a class="nav-link" href="shop.php">Cửa Hàng</a>
                                     <div class="dropdown-menu p-0">
                                         <div class="d-flex flex-wrap flex-sm-nowrap px-2">
                                             <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
@@ -221,24 +219,20 @@ if(isset($_SESSION['cart'])){
                                                 data-bs-toggle="dropdown">Tài khoản người dùng</a>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#">Lịch sử đặt hàng</a></li>
-                                                <li><a class="dropdown-item" href="#">Profile
-                                                        Settings</a></li>
-                                                <li><a class="dropdown-item" href="#">Account
-                                                        Addresses</a></li>
-                                                <li><a class="dropdown-item" href="#">Payment
-                                                        Methods</a></li>
+                                                <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
+                                                <li><a class="dropdown-item" href="#">Phương thức thanh toán</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="dropdown-item" href="login.php">Sign In / Sign Up</a></li>
+                                        <li><a class="dropdown-item" href="login.php">Đăng Nhập / Đăng Kí</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">Pages</a>
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">Trang Liên Hệ</a>
                                     <ul class="dropdown-menu">
 
                                         <li class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="about.php">About Us</a></li>
-                                        <li><a class="dropdown-item" href="contact.php">Contacts</a></li>
+                                        <li><a class="dropdown-item" href="about.php">Thông tin về chúng tôi</a></li>
+                                        <li><a class="dropdown-item" href="contact.php">Liên hệ</a></li>
                                         
                                     </ul>
                                 </li>

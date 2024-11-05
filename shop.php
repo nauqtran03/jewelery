@@ -41,7 +41,7 @@ foreach ($products as $product) {
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
             <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Trang Chủ</a></li>
-            <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a></li>
+            <li class="breadcrumb-item text-nowrap"><a href="#">Cửa Hàng</a></li>
             <li class="breadcrumb-item text-nowrap active" aria-current="page">Sản phẩm</li>
           </ol>
         </nav>
@@ -56,8 +56,8 @@ foreach ($products as $product) {
   <!-- Toolbar-->
   <div class="bg-light shadow-lg rounded-3 p-4 mt-n5 mb-4">
     <div class="d-flex justify-content-between align-items-center">
-      <div class="dropdown me-2"><a class="btn btn-outline-secondary dropdown-toggle" href="#shop-filters" data-bs-toggle="collapse"><i class="ci-filter me-2"></i>Filters</a></div>
-      <div class="d-flex"><a class="nav-link-style me-3" href="#"><i class="ci-arrow-left"></i></a><span class="fs-md">1 / 5</span><a class="nav-link-style ms-3" href="#"><i class="ci-arrow-right"></i></a></div>
+      <div class="dropdown me-2"><a class="btn btn-outline-secondary dropdown-toggle" href="#shop-filters" data-bs-toggle="collapse"><i class="ci-filter me-2"></i>Tìm Kiếm</a></div>
+      <!-- <div class="d-flex"><a class="nav-link-style me-3" href="#"><i class="ci-arrow-left"></i></a><span class="fs-md">1 / 5</span><a class="nav-link-style ms-3" href="#"><i class="ci-arrow-right"></i></a></div> -->
       <div class="d-none d-sm-flex"><a class="btn btn-icon nav-link-style me-2" href="#"><i class="ci-view-grid"></i></a><a class="btn btn-icon nav-link-style bg-primary text-light disabled opacity-100" href="#"><i class="ci-view-list"></i></a></div>
     </div>
     <!-- Toolbar with expandable filters-->
@@ -156,7 +156,7 @@ foreach ($products as $product) {
     <aside class="col-lg-4 d-none d-lg-block">
       <div class="d-flex d-lg-block p-4 ms-auto w-100" style="max-width: 21.25rem;">
         <div class="widget mb-4">
-          <h3 class="widget-title">Popular products</h3>
+          <h3 class="widget-title">Sản Phẩm Phố Biến</h3>
           <?php
           // Kiểm tra xem mảng có ít nhất 5 phần tử không
           if (count($products) >= 5) {

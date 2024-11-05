@@ -44,7 +44,7 @@ require_once('files/header.php');
           <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Home</a></li>
           <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
           </li>
-          <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">Product-Categories</li>
         </ol>
       </nav>
     </div>
@@ -75,7 +75,7 @@ require_once('files/header.php');
             <div class="row mt-4">
               <div class="col-md-6">
                 <div class="form-group">
-                <?= text_input([ 'name' => 'parent_id', 'label' => 'Parent Categories', ], $categories) ?>
+                <?= text_input([ 'name' => 'parent_id', 'label' => 'Parent Categories', ]) ?>
                 </div>
               </div>
               <div class="col-md-6">

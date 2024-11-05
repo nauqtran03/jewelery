@@ -111,14 +111,14 @@ $products = db_select('products', '1 ORDER BY id DESC');
       <div class="d-flex flex-column h-100 overflow-hidden rounded-3" style="background-color: #e2e9ef;">
         <div class="d-flex justify-content-between px-grid-gutter py-grid-gutter">
           <div>
-            <h3 class="mb-1">Valentine day</h3><a class="fs-md" href="shop-grid-ls.html">Mua sắm<i
+            <h3 class="mb-1">Valentine day</h3><a class="fs-md" href="shop.php">Mua sắm<i
                 class="ci-arrow-right fs-xs align-middle ms-1"></i></a>
           </div>
           <div class="tns-carousel-controls" id="valentine-day">
             <button type="button"><i class="ci-arrow-left"></i></button>
             <button type="button"><i class="ci-arrow-right"></i></button>
           </div>
-        </div><a class="d-none d-md-block mt-auto" href="shop-grid-ls.html"><img class="d-block w-100"
+        </div><a class="d-none d-md-block mt-auto" href="shop.php"><img class="d-block w-100"
             src="img/home/categories/banner_01.jpg" alt="For Women"></a>
       </div>
     </div>

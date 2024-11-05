@@ -1,11 +1,12 @@
 <?php
 require_once('files/functions.php');
 $user = $_SESSION['user'];
+
 $total = 0;
 foreach($_SESSION['cart'] as $key =>$val){
     $total += $val['quantity']* $val['pro']['buying_price'];
- 
 }
+
 db_insert(
     'orders',
     [
@@ -14,7 +15,6 @@ db_insert(
         'shipping'=> json_encode($_SESSION['shipping']),
         'cart' => json_encode($_SESSION['cart']),
         'user' => json_encode($_SESSION['user']),
-        'order_date' =>time(),
         'total_price' => $total,
     ]
 );

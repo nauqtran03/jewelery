@@ -42,40 +42,38 @@ $is_cart_empty = empty($cart_items);
                     <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
                         <h2 class="h6 text-light mb-0">Products</h2><a class="btn btn-outline-primary btn-sm ps-2" href="shop.php"><i class="ci-arrow-left me-2"></i>Continue shopping</a>
                     </div>
-                    <?php 
-                        foreach($cart_items as $key => $item) {       
-                    ?>
-                    <!-- Item-->
-                    <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                        <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
-                            <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="product.php?id=<?= $item['pro']['id']?>">
-                                <img src="<?= get_product_thumb($item['pro']['photo']) ?>" width="160" alt="Product">
-                            </a>
-                            <div class="pt-2">
-                                <h3 class="product-title fs-base mb-2">
-                                    <a href="product.php?id=<?= $item['pro']['id']?>"><?= substr($item['pro']['name'],0,45) ?></a>
-                                </h3>
-                                <div class="fs-sm"><span class="text-muted me-2">Giá: <?= $item['pro']['buying_price']?>đ</span></div>
-                                <div class="fs-lg text-accent pt-2">Tổng: <?= $item['pro']['buying_price'] * $item['quantity'] ?><small>Đ</small></div>
+                    <?php foreach ($cart_items as $key => $item): ?>
+                        <!-- Item-->
+                        <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+                            <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
+                                <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="product.php?id=<?= $item['pro']['id'] ?>">
+                                    <img src="<?= get_product_thumb($item['pro']['photo']) ?>" width="160" alt="Product">
+                                </a>
+                                <div class="pt-2">
+                                    <h3 class="product-title fs-base mb-2">
+                                        <a href="product.php?id=<?= $item['pro']['id'] ?>"><?= substr($item['pro']['name'], 0, 45) ?></a>
+                                    </h3>
+                                    <div class="fs-sm"><span class="text-muted me-2">Giá: <?= number_format($item['pro']['buying_price']) ?>đ</span></div>
+                                    <div class="fs-lg text-accent pt-2">Tổng: <?= number_format($item['pro']['buying_price'] * $item['quantity']) ?><small>Đ</small></div>
+                                </div>
+                            </div>
+                            <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+                                <label class="form-label" for="quantity<?= $key ?>">Số lượng</label>
+                                <input class="form-control" type="number" id="quantity<?= $key ?>" min="1" value="<?= $item['quantity'] ?>" onchange="updateQuantity(<?= $item['pro']['id'] ?>, this.value)">
+                                <a class="btn btn-link px-0 text-danger" href="cart-process-remove.php?id=<?= $item['pro']['id'] ?>" type="button"><i class="ci-close-circle me-2"></i><span class="fs-sm">Remove</span></a>
                             </div>
                         </div>
-                        <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                            <label class="form-label" for="quantity<?= $key ?>">Số lượng</label>
-                            <input class="form-control" type="number" id="quantity<?= $key ?>" min="1" value="<?= $item['quantity'] ?>" onchange="updateCart(<?= $item['pro']['id'] ?>, this.value)">
-                            <a class="btn btn-link px-0 text-danger" href="cart-process-remove.php?id=<?= $item['pro']['id'] ?>" type="button"><i class="ci-close-circle me-2"></i><span class="fs-sm">Remove</span></a>
-                        </div>
-                    </div>
-                    <?php } ?>
-                    <button class="btn btn-outline-accent d-block w-100 mt-4" type="button" onclick="location.reload()"><i class="ci-loading fs-base me-2"></i>Update cart</button>
+                    <?php endforeach; ?>
+                    <button class="btn btn-outline-accent d-block w-100 mt-4" type="button" onclick="updateCart()"><i class="ci-loading fs-base me-2"></i>Cập nhật giỏ hàng</button>
                 </section>
-                
+
                 <!-- Sidebar-->
                 <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
                     <div class="bg-white rounded-3 shadow-lg p-4">
                         <div class="py-2 px-xl-2">
                             <div class="text-center mb-4 pb-3 border-bottom">
                                 <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                                <h3 class="fw-normal"><?= $subtotal ?><small>Đ</small></h3>
+                                <h3 class="fw-normal"><?= number_format($subtotal) ?><small>Đ</small></h3>
                             </div>
                             <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="check-out.php"><i class="ci-card fs-lg me-2"></i>Proceed to Checkout</a>
                         </div>
@@ -101,14 +99,68 @@ require_once('files/footer.php');
 ?>
 
 <script>
-function updateCart(productId, quantity) {
-    // Gửi yêu cầu AJAX để cập nhật số lượng sản phẩm trong giỏ hàng
-    fetch(cart-process-update.php?id=${productId}&quantity=${quantity}, {
-        method: 'GET'
-    }).then(response => {
-        if (response.ok) {
-            console.log("Cart updated successfully");
+    function updateQuantity(productId, quantity) {
+        if (quantity < 1) {
+            alert("Số lượng phải lớn hơn 0.");
+            return;
         }
-    });
-}
+        fetch(`cart-process-update.php?id=${productId}&quantity=${quantity}`, {
+            method: 'GET'
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  console.log("Quantity updated successfully");
+              } else {
+                  alert(data.message);
+              }
+          })
+          .catch(error => {
+              console.error("Error updating quantity:", error);
+          });
+    }
+
+    function updateCart() {
+        const updates = [];
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            const productId = input.id.replace('quantity', ''); // Lấy ID sản phẩm từ id của input
+            const quantity = input.value;
+            updates.push({ id: productId, quantity: quantity });
+        });
+
+        fetch(`cart-process-update.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updates)
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  console.log("Cart updated successfully");
+                  location.reload(); // Tải lại trang sau khi cập nhật
+              } else {
+                  alert(data.message);
+              }
+          })
+          .catch(error => {
+              console.error("Error updating cart:", error);
+          });
+    }
+
+    function removeItem(productId) {
+        fetch(`cart-process-remove.php?id=${productId}`, {
+            method: 'GET'
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  console.log("Item removed successfully");
+                  location.reload(); // Tải lại trang sau khi xóa
+              } else {
+                  alert(data.message);
+              }
+          })
+          .catch(error => {
+              console.error("Error removing item:", error);
+          });
+    }
 </script>

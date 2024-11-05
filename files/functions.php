@@ -77,7 +77,20 @@ function get_product_thumb($json)
     }
     return $objects[0]->thumb;
 }
-
+function db_select_orders_by_user($user_id) {
+    global $conn;
+    $sql = "SELECT orders.* FROM orders 
+            JOIN users ON orders.custumer_id = users.id 
+            WHERE users.id = $user_id 
+            ORDER BY orders.id DESC";
+    
+    $res = $conn->query($sql);
+    $rows = [];
+    while ($row = $res->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
 function db_select($table, $condition = null)
 {
     $sql = "SELECT * FROM $table";
@@ -132,8 +145,32 @@ function db_insert($table_name, $data)
     }
 
 }
-
-
+// function db_fetch_all($query, $params = []) {
+//     // Kết nối tới cơ sở dữ liệu, dùng PDO cho tính bảo mật
+//     $dsn = "mysql:host=localhost;dbname=jewelry;charset=utf8";
+//     $username = "root";
+//     $password = "";
+    
+//     try {
+//         $pdo = new PDO($dsn, $username, $password);
+//         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+//         // Chuẩn bị và thực thi câu lệnh SQL
+//         $stmt = $pdo->prepare($query);
+//         $stmt->execute($params);
+        
+//         // Trả về tất cả kết quả dưới dạng mảng
+//         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//     } catch (PDOException $e) {
+//         // Xử lý lỗi kết nối nếu có
+//         die("Lỗi kết nối: " . $e->getMessage());
+//     }
+// }
+// function get_user_orders($user_id) {
+//     global $conn;
+//     $sql = "SELECT * FROM orders WHERE customer_id = ?";
+//     return db_fetch_all($sql, [$user_id]);
+// }
 
 function create_thumb($source, $target)
 {
@@ -373,15 +410,16 @@ function product_item_ui_1($pro)
 {
 
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
 
               <div class="card product-card product-list">
               <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
               <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="product.php?id={$pro['id']}"><img src="{$thumb}" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
+                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"></a>
                   <h3 class="product-title fs-base"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                   <div class="d-flex justify-content-between">
-                    <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                    <div class="product-price"><span class="text-accent">{$price}<small>Đ</small></span></div>
                     <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
                     </div>
                   </div>
@@ -398,6 +436,7 @@ function product_item_ui_2($pro)
 {
 
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
 
               <div class="d-flex align-items-center pb-2 border-bottom"><a class="d-block" href="product.php?id={$pro['id']}"><img src="{$thumb}" width="64" alt="Product"></a>
@@ -412,6 +451,7 @@ function product_item_ui_2($pro)
 }
 function product_item_ui_3($pro){
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
             <div class="card product-card">
@@ -420,7 +460,7 @@ function product_item_ui_3($pro){
               <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                 <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                 <div class="d-flex justify-content-between">
-                  <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                  <div class="product-price"><span class="text-accent">{$price}<small>Đ</small></span></div>
                   <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
                   </div>
                 </div>
@@ -433,6 +473,7 @@ function product_item_ui_3($pro){
 }
 function product_item_ui_4($pro){
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
         <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                       <div class="card product-card card-static">
@@ -441,7 +482,7 @@ function product_item_ui_4($pro){
                         <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                           <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                           <div class="d-flex justify-content-between">
-                            <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                            <div class="product-price"><span class="text-accent">{$price}<small>Đ</small></span></div>
                             <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
                             </div>
                           </div>
@@ -453,6 +494,7 @@ function product_item_ui_4($pro){
 }
 function product_item_ui_5($pro){
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
         <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4 d-none d-lg-block">
                 <div class="card product-card card-static">
@@ -463,7 +505,7 @@ function product_item_ui_5($pro){
                   <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
                     <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
                     <div class="d-flex justify-content-between">
-                      <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                      <div class="product-price"><span class="text-accent">{$price}<small>Đ</small></span></div>
                       <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
                           class="star-rating-icon ci-star-filled active"></i><i
                           class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i
@@ -478,6 +520,7 @@ function product_item_ui_5($pro){
 }
 function product_item_ui_6($pro){
     $thumb = get_product_thumb($pro['photo']);
+    $price = number_format($pro['buying_price']);
     $str = <<<EOF
         <div>
           <div class="card product-card card-static">
@@ -487,7 +530,7 @@ function product_item_ui_6($pro){
             <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="product.php?id={$pro['id']}"></a>
               <h3 class="product-title fs-sm"><a href="product.php?id={$pro['id']}">{$pro['name']}</a></h3>
               <div class="d-flex justify-content-between">
-                <div class="product-price"><span class="text-accent">{$pro['buying_price']}<small>Đ</small></span></div>
+                <div class="product-price"><span class="text-accent">{$price}<small>Đ</small></span></div>
                 <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
                     class="star-rating-icon ci-star-filled active"></i><i
                     class="star-rating-icon ci-star-filled active"></i><i
@@ -497,6 +540,26 @@ function product_item_ui_6($pro){
             </div>
           </div>
         </div>
+    EOF;
+    return $str;
+}
+function category_item_ui_7($category){
+    // Lấy thumb từ hàm get_product_thumb
+    $thumb = get_product_thumb($category['photo']);
+    $str = <<<EOF
+        <div class="d-block d-sm-flex align-items-center py-4 border-bottom">
+                  <a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="shop.php?category_id={$category['id']}" style="width: 12.5rem;">
+                    <img class="rounded-3" src="{$thumb}" alt="Product">
+                  </a>
+                  <div class="text-center text-sm-start">
+                    <h3 class="h6 product-title mb-2"><a href="shop.php?category_id={$category['id']}">{$category['name']}</a></h3>
+                    
+                    <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Mô tả: {$category['description']}</div>
+
+                    <div class="d-flex justify-content-center justify-content-sm-start pt-3">
+                    </div>
+                  </div>
+                </div>
     EOF;
     return $str;
 }

@@ -68,7 +68,7 @@ $products = db_select('products', '1 ORDER BY id DESC');
                 </a>
                 <?php $active_class = "";
               } ?>
-              
+
               </a>
             </div>
           </div>
@@ -87,8 +87,8 @@ $products = db_select('products', '1 ORDER BY id DESC');
                 title="Add to wishlist"><i class="ci-heart"></i></button>
             </div>
             <div class="mb-3"><span
-                class="h3 fw-normal text-accent me-1"><?= $pro['buying_price'] ?><small>Đ</small></span>
-              <del class="text-muted fs-lg me-3"><?= $pro['price'] ?><small>Đ</small></del><span
+                class="h3 fw-normal text-accent me-1"><?= number_format($pro['buying_price']) ?><small>Đ</small></span>
+              <del class="text-muted fs-lg me-3"><?= number_format($pro['price'] )?><small>Đ</small></del><span
                 class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
             </div>
 
@@ -107,7 +107,6 @@ $products = db_select('products', '1 ORDER BY id DESC');
                       class="ci-cart fs-lg me-2"></i>Add to Cart</button>
                 <?php else: ?>
                   <?php
-
                   alert('warning', 'Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng.');
                   ?>
                   <button class="btn btn-secondary d-block w-100" type="button"
