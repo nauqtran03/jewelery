@@ -10,6 +10,11 @@ $address = trim($_POST['dia_chi']);
 $username = trim($_POST['ten_dang_nhap']);
 $user = trim($_POST['ten_tai_khoan']);
 
+// if (!preg_match('/^\d{10}$/', $phone)) {
+//     alert('danger', 'Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 chữ số.');
+//     header('Location: login.php');
+//     die();
+// }
 
 if($password != $password_1){
     alert('danger','Mật khẩu không trùng khớp.');
