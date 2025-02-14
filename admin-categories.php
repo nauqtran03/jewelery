@@ -15,15 +15,17 @@ require_once('files/header.php');
     <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-          <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Home</a></li>
-          <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+          <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Trang chủ</a></li>
+          <li class="breadcrumb-item text-nowrap"><a href="#">Tài khoản</a>
           </li>
-          <li class="breadcrumb-item text-nowrap active" aria-current="page">Product categories</li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">
+          Danh mục sản phẩm</li>
         </ol>
       </nav>
     </div>
     <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-      <h1 class="h3 text-light mb-0">Product-Categories</h1>
+      <h1 class="h3 text-light mb-0">
+      Danh mục sản phẩm</h1>
     </div>
   </div>
 </div>
@@ -35,17 +37,18 @@ require_once('files/header.php');
       <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
         <!-- Title-->
         <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
-          <h2 class="h3 py-2 me-2 text-center text-sm-start">Product categories<span
+          <h2 class="h3 py-2 me-2 text-center text-sm-start">
+          Danh mục sản phẩm<span
               class="badge bg-faded-accent fs-sm text-body align-middle ms-2">5</span></h2>
           <div class="py-2">
             <div class="d-flex flex-nowrap align-items-center pb-3">
-              <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">Sort by:</label>
+              <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">Sắp xếp theo:</label>
               <select class="form-select form-select-sm me-2" id="sorting">
-                <option>Date Created</option>
-                <option>Product Name</option>
-                <option>Price</option>
-                <option>Your Rating</option>
-                <option>Updates</option>
+                <option>Ngày tạo</option>
+                <option>Tên sản phẩm</option>
+                <option>Giá</option>
+                <option>Đánh giá của bạn</option>
+                <option>Cập nhật</option>
               </select>
               <!-- <button class="btn btn-outline-secondary btn-sm px-2" type="button"><i class="ci-arrow-up"></i></button> -->
             </div>

@@ -104,13 +104,15 @@ $products = db_select('products', '1 ORDER BY id DESC');
                 </select>
                 <?php if (isset($_SESSION['user'])): ?>
                   <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i
-                      class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                      class="ci-cart fs-lg me-2"></i>
+                      Thêm vào giỏ hàng</button>
                 <?php else: ?>
                   <?php
                   alert('warning', 'Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng.');
                   ?>
                   <button class="btn btn-secondary d-block w-100" type="button"
-                    onclick="window.location.href='login.php'"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                    onclick="window.location.href='login.php'"><i class="ci-cart fs-lg me-2"></i>
+                    Thêm vào giỏ hàng</button>
                 <?php endif; ?>
               </div>
             </form>
@@ -133,7 +135,7 @@ $products = db_select('products', '1 ORDER BY id DESC');
               </div>
             </div>
             <!-- Sharing-->
-            <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a
+            <label class="form-label d-inline-block align-middle my-2 me-3">Chia sẻ:</label><a
               class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a
               class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a
               class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a>

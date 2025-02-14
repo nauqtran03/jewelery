@@ -141,12 +141,12 @@ foreach ($products as $product) {
         <?php if ($current_page < $total_pages): ?>
             <li class="page-item">
                 <a class="page-link" href="?page=<?php echo $current_page + 1; ?>" aria-label="Next">
-                    Next<i class="ci-arrow-right ms-2"></i>
+                    Tiếp<i class="ci-arrow-right ms-2"></i>
                 </a>
             </li>
         <?php else: ?>
             <li class="page-item disabled">
-                <span class="page-link">Next<i class="ci-arrow-right ms-2"></i></span>
+                <span class="page-link">Tiếp<i class="ci-arrow-right ms-2"></i></span>
             </li>
         <?php endif; ?>
     </ul>
@@ -175,14 +175,14 @@ foreach ($products as $product) {
         </div>
         <div class="position-relative bg-size-cover bg-position-center rounded-3 py-5 mb-grid-gutter" style="background-image: url(img/blog/banner-bg.jpg);">
           <div class="py-5 px-4 text-center">
-            <h5 class="mb-2">Your Add Banner Here</h5>
-            <p class="fs-sm text-muted">Hurry up to reserve your spot</p><a class="btn btn-info btn-shadow btn-sm stretched-link" href="contact.php">Contact Us</a>
+            <h5 class="mb-2">Thêm quảng cáo của bạn ở đây</h5>
+            <p class="fs-sm text-muted">Hãy nhanh tay giữ chỗ nhé</p><a class="btn btn-info btn-shadow btn-sm stretched-link" href="contact.php">Liên hệ chúng tôi</a>
           </div>
         </div>
         <div class="position-relative bg-faded-primary rounded-3 overflow-hidden pt-4">
           <div class="py-4 px-4 text-center">
             <p class="fs-sm text-muted mb-2">Converse All Star</p>
-            <h5 class="mb-3">Make Your Day Comfortable</h5><a class="btn btn-primary btn-shadow btn-sm stretched-link" href="https://www.converse.vn/">Shop Now</a>
+            <h5 class="mb-3">Làm cho ngày của bạn thoải mái</h5><a class="btn btn-primary btn-shadow btn-sm stretched-link" href="https://www.converse.vn/">Mua ngay</a>
           </div><img src="img/shop/catalog/banner2.jpg" alt="Banner">
         </div>
       </div>

@@ -44,7 +44,7 @@ require_once('files/header.php');
               </div>
               <hr class="mt-4">
               <div class="text-end pt-4">
-                <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Sign In</button>
+                <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Đăng Nhập</button>
               </div>
             </form>
           </form>
@@ -52,9 +52,8 @@ require_once('files/header.php');
       </div>
     </div>
     <div class="col-md-6 pt-4 mt-3 mt-md-0">
-      <h2 class="h4 mb-3">No account? Sign up</h2>
-      <p class="fs-sm text-muted mb-4">Registration takes less than a minute but gives you full control over your
-        orders.</p>
+      <h2 class="h4 mb-3">Không có tài khoản? Đăng ký</h2>
+      <p class="fs-sm text-muted mb-4">Việc đăng ký chỉ mất chưa đầy một phút nhưng mang lại cho bạn toàn quyền kiểm soát đơn đặt hàng.</p>
       <form method="post" action="register-logic.php" class="needs-validation" novalidate>
         <div class="row gx-4 gy-3">
           <div class="col-sm-6">

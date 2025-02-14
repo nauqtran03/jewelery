@@ -48,15 +48,15 @@ require_once('files/header.php');
     <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-          <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Home</a></li>
-          <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+          <li class="breadcrumb-item"><a class="text-nowrap" href="index-2.html"><i class="ci-home"></i>Trang chủ</a></li>
+          <li class="breadcrumb-item text-nowrap"><a href="#">Tài khoản</a>
           </li>
-          <li class="breadcrumb-item text-nowrap active" aria-current="page">Product Add</li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">Thêm sản phẩm</li>
         </ol>
       </nav>
     </div>
     <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-      <h1 class="h3 text-light mb-0">Product Add</h1>
+      <h1 class="h3 text-light mb-0">Thêm sản phẩm</h1>
     </div>
   </div>
 </div>
@@ -68,7 +68,7 @@ require_once('files/header.php');
       <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
         <!-- Title-->
         <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
-          <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
+          <h2 class="h3 py-2 me-2 text-center text-sm-start">Thêm sản phẩm mới</h2>
           <div class="py-2">
             <!-- <?= select_input([
               'name' => 'parent_id',
@@ -112,13 +112,13 @@ require_once('files/header.php');
               <div class="row">
                 <div class="col-md-6 mt-3">
                   <div class="form-group">
-                    <label for="photo">Product photo 1</label>
+                    <label for="photo">Ảnh sản phẩm 1</label>
                     <input class="form-control" name="photo_1" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
                 <div class="col-md-6 mt-3">
                   <div class="form-group">
-                    <label for="photo">Product photo 2</label>
+                    <label for="photo">Ảnh sản phẩm 2</label>
                     <input class="form-control" name="photo_2" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
@@ -126,13 +126,13 @@ require_once('files/header.php');
               <div class="row">
                 <div class="col-md-6 mt-3">
                   <div class="form-group">
-                    <label for="photo">Product photo 3</label>
+                    <label for="photo">Ảnh sản phẩm 3</label>
                     <input class="form-control" name="photo_3" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
                 <div class="col-md-6 mt-3">
                   <div class="form-group">
-                    <label for="photo">Product photo 4</label>
+                    <label for="photo">Ảnh sản phẩm 4</label>
                     <input class="form-control" name="photo_4" type="file" accept=".jpg,.jpeg,.png">
                   </div>
                 </div>
@@ -142,14 +142,14 @@ require_once('files/header.php');
           <div class="row mt-3">
             <div class="col-12">
               <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">Miêu tả</label>
                 <textarea name="description" id="desciption" class="form-control"></textarea>
               </div>
             </div>
           </div>
       </div>
       <button class="btn btn-primary d-block w-100" type="submit"><i
-          class="ci-cloud-upload fs-lg me-2"></i>SUBMIT</button>
+          class="ci-cloud-upload fs-lg me-2"></i>TẢI LÊN</button>
       </form>
   </div>
   </section>

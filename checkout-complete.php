@@ -15,27 +15,28 @@ if (isset($_SESSION['cart'])) {
     <div class="pt-5">
         <div class="card py-3 mt-sm-3">
             <div class="card-body text-center">
-                <h2 class="h4 pb-3">Thank you for your order!</h2>
-                <p class="fs-sm mb-2">Your order has been placed and will be processed as soon as possible.</p>
+                <h2 class="h4 pb-3">Cảm ơn bạn đã đặt hàng!</h2>
+                <p class="fs-sm mb-2">Đơn hàng của bạn đã được đặt và sẽ được xử lý trong thời gian sớm nhất.
+                </p>
                 
                 <?php if ($u): ?>
                     <!-- Hiển thị thông tin tài khoản -->
                     <p class="fs-sm mb-2">
-                        Account name: <span class='fw-medium'><?= htmlspecialchars($u['ten_tai_khoan']) ?></span>
+                        Tên tài khoản: <span class='fw-medium'><?= htmlspecialchars($u['ten_tai_khoan']) ?></span>
                     </p>
                     <p class="fs-sm mb-2">
                         Email: <span class='fw-medium'><?= htmlspecialchars($u['email']) ?></span>
                     </p>
                     <p class="fs-sm mb-2">
-                        Phone: <span class='fw-medium'><?= htmlspecialchars($u['sdt']) ?></span>
+                        Số điện thoại: <span class='fw-medium'><?= htmlspecialchars($u['sdt']) ?></span>
                     </p>
                 <?php else: ?>
                     <p class="fs-sm mb-2">We could not retrieve your account information.</p>
                 <?php endif; ?>
 
-                <p class="fs-sm">You will be receiving an email shortly with confirmation of your order. <u>You can now:</u></p>
-                <a class="btn btn-secondary mt-3 me-3" href="shop.php">Go back shopping</a>
-                <a class="btn btn-primary mt-3" href="account-order.php"><i class="ci-location"></i>&nbsp;Go to my order</a>
+                <p class="fs-sm">Bạn sẽ sớm nhận được email xác nhận đơn đặt hàng của bạn. <u>Bây giờ bạn có thể:</u></p>
+                <a class="btn btn-secondary mt-3 me-3" href="shop.php">Quay lại mua sắm</a>
+                <a class="btn btn-primary mt-3" href="account-order.php"><i class="ci-location"></i>&nbsp;Đi đến đơn hàng của tôi</a>
             </div>
         </div>
     </div>

@@ -65,7 +65,7 @@ $orders = db_select_orders_by_user($user_id);
                                     ?>
                                 </td>
                                 <td class="py-3">
-                                    <span class="badge bg-info m-0"><?= $order['order_status'] == 1 ? 'In Progress' : 'Completed' ?></span>
+                                    <span class="badge bg-info m-0"><?= $order['order_status'] == 1 ? 'Đang tiến hành' : 'Hoàn thành' ?></span>
                                 </td>
                                 <td class="py-3"><?= number_format($order['total_price']) ?> Đ</td>
                             </tr>
